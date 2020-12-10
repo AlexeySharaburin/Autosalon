@@ -19,8 +19,8 @@ public class Customer implements Runnable {
     }
 
     public synchronized Auto buyAuto() {
+        autosalon.produceAuto();
         try {
-            autosalon.produceAuto();
             while (autosalon.getAuto().size() == 0) {
                 System.out.println("Нет автомобилей в наличии");
                 wait();
@@ -35,9 +35,7 @@ public class Customer implements Runnable {
 
     public synchronized void recieveAuto() {
         try {
-            Thread.sleep(2000); // производим автомобиль
-            autosalon.getAuto().add(new Auto());
-            System.out.println("Автосалон выпустил 1 автомобиль");
+            Thread.sleep(1000);// разгрузка автомобиля
             notify();
         } catch (Exception e) {
             e.printStackTrace();

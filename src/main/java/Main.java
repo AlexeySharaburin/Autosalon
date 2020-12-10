@@ -17,7 +17,7 @@ public class Main {
         final Customer customer10 = new Customer(autosalon);
 
 
-        new Thread(null, autosalon, "Производитель").start();
+        new Thread(null, autosalon, "Автосалон с производством").start();
 
         new Thread(null, customer1, "Покупатель 1").start();
         new Thread(null, customer2, "Покупатель 2").start();

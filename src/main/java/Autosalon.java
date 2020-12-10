@@ -8,10 +8,17 @@ public class Autosalon implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Наш автосалон открыл продажи автомобилей!\n");
+        System.out.printf("%s открыл продажи автомобилей!\n", Thread.currentThread().getName());
     }
 
     public void produceAuto() {
+        try {
+            Thread.sleep(3000); // производим автомобиль
+            getAuto().add(new Auto());
+            System.out.println("Автосалон выпустил 1 автомобиль");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         customer.recieveAuto();
     }
 
