@@ -1,34 +1,35 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Autosalon implements Runnable {
+public class Autosalon {
 
     List<Auto> auto = new ArrayList<>(1);
     Customer customer = new Customer(this);
+    int iMax = 10;
 
-    @Override
-    public void run() {
-        System.out.printf("%s открыл продажи автомобилей!\n", Thread.currentThread().getName());
-    }
 
-    public void produceAuto() {
+    public void sellAuto() {
+        System.out.printf("%s открыл продажи автомобилей!\n\n", Thread.currentThread().getName());
         try {
-            Thread.sleep(3000); // производим автомобиль
-            getAuto().add(new Auto());
-            System.out.println("Автосалон выпустил 1 автомобиль");
-        } catch (InterruptedException e) {
+            while (iMax != 0) {
+                Thread.sleep(3000);
+                System.out.printf("%s подготовил автомобиль к продаже\n", Thread.currentThread().getName());
+                auto.add(new Auto());
+                customer.recieveAuto();
+                iMax--;
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        customer.recieveAuto();
     }
 
-    public Auto sellAuto() {
-        return customer.buyAuto();
+    public Auto buyAuto() {
+        return customer.buyAutos();
     }
 
     List<Auto> getAuto() {
         return auto;
     }
-
 
 }

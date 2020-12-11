@@ -1,4 +1,4 @@
-public class Customer implements Runnable {
+public class Customer {
 
     private Autosalon autosalon;
 
@@ -6,36 +6,24 @@ public class Customer implements Runnable {
         this.autosalon = autosalon;
     }
 
-    @Override
-    public void run() {
+    public synchronized Auto buyAutos() {
         try {
-            Thread.sleep(1000);// запуск покупателей в салон
             System.out.printf("%s зашёл в автосалон\n", Thread.currentThread().getName());
-            Thread.sleep(1000); // тайм-аут желания
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        autosalon.sellAuto();
-    }
-
-    public synchronized Auto buyAuto() {
-        autosalon.produceAuto();
-        try {
+            Thread.sleep(2000);
             while (autosalon.getAuto().size() == 0) {
                 System.out.println("Нет автомобилей в наличии");
                 wait();
             }
-            Thread.sleep(1000); // оформляем автомобиль
-            System.out.printf("%s уехал домой на новом автомобиле\n", Thread.currentThread().getName());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.printf("%s уехал домой на новом автомобиле\n", Thread.currentThread().getName());
         return autosalon.getAuto().remove(0);
     }
 
     public synchronized void recieveAuto() {
         try {
-            Thread.sleep(1000);// разгрузка автомобиля
+            Thread.sleep(1000);
             notify();
         } catch (Exception e) {
             e.printStackTrace();
